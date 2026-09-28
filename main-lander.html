@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Your Match Is Waiting</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
+            margin: 0;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 420px;
+            width: 100%;
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 28px 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        
+        .badge {
+            display: inline-block;
+            background: #ff4757;
+            color: #fff;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 30px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+        
+        .photo-wrapper {
+            position: relative;
+            width: 140px;
+            height: 140px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ff4757;
+            box-shadow: 0 0 40px rgba(255,71,87,0.4);
+        }
+        
+        .photo-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .online-dot {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            width: 18px;
+            height: 18px;
+            background: #2ed573;
+            border-radius: 50%;
+            border: 3px solid #16213e;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
+        }
+        
+        .name {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            letter-spacing: -0.3px;
+        }
+        
+        .name span { color: #ff4757; }
+        
+        .location {
+            font-size: 14px;
+            color: #aaa;
+            margin-bottom: 6px;
+        }
+        
+        .distance {
+            font-size: 13px;
+            color: #2ed573;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .desc {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #ccc;
+            margin-bottom: 20px;
+            padding: 0 8px;
+        }
+        
+        .desc strong { color: #fff; }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 22px;
+        }
+        
+        .stat { text-align: center; }
+        
+        .stat .num {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff4757;
+        }
+        
+        .stat .label {
+            font-size: 11px;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .cta-btn {
+            display: block;
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff4757, #ff6b81);
+            color: #fff;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 16px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 30px rgba(255,71,87,0.4);
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+            animation: glow 2s infinite;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(255,71,87,0.6);
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 8px 30px rgba(255,71,87,0.4); }
+            50% { box-shadow: 0 8px 50px rgba(255,71,87,0.7); }
+        }
+        
+        .sub-text {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .sub-text .highlight {
+            color: #2ed573;
+            font-weight: 600;
+        }
+        
+        .trust {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 18px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        
+        .trust span {
+            font-size: 11px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .trust span::before {
+            content: '✓';
+            color: #2ed573;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 400px) {
+            .container { padding: 20px 16px; }
+            .photo-wrapper { width: 110px; height: 110px; }
+            .name { font-size: 20px; }
+            .desc { font-size: 14px; }
+            .cta-btn { font-size: 16px; padding: 15px; }
+            .stats { gap: 16px; }
+            .stat .num { font-size: 17px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="badge">🔥 Online Now</div>
+    
+    <div class="photo-wrapper">
+        <img src="https://i.pravatar.cc/300?img=25" alt="Profile" id="profilePhoto">
+        <div class="online-dot"></div>
+    </div>
+    
+    <div class="name" id="profileName">Jessica, <span>24</span></div>
+    <div class="location" id="profileLocation">📍 New York, USA</div>
+    <div class="distance" id="profileDistance">● 2.3 km away from you</div>
+    
+    <div class="desc" id="profileDesc">
+        <strong>"Looking for someone to chat with tonight..."</strong><br>
+        I'm online now and I'd love to talk to you. Don't keep me waiting 😉
+    </div>
+    
+    <div class="stats">
+        <div class="stat"><div class="num">1.2K</div><div class="label">Views</div></div>
+        <div class="stat"><div class="num">98%</div><div class="label">Match</div></div>
+        <div class="stat"><div class="num">5 min</div><div class="label">Reply</div></div>
+    </div>
+    
+    <a href="YOUR_CPA_LINK_HERE" class="cta-btn" id="ctaBtn">
+        💬 Chat With Her Now
+    </a>
+    
+    <div class="sub-text">
+        <span class="highlight">●</span> She's waiting for you
+    </div>
+    
+    <div class="trust">
+        <span>100% Free</span>
+        <span>No Signup</span>
+        <span>Instant</span>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // 🔥 KONFIGURASI 🔥
+    // ============================================================
+    const CPA_LINK = "https://your-cpa-offer-link.com/click"; // GANTI!
+    
+    const PROFILES = [
+        { name: "Jessica", age: 24, location: "New York, USA", distance: "2.3 km away", desc: "Looking for someone to chat with tonight...", photo: "https://i.pravatar.cc/300?img=25" },
+        { name: "Amanda", age: 22, location: "Los Angeles, USA", distance: "1.8 km away", desc: "I'm bored and I need someone to talk to...", photo: "https://i.pravatar.cc/300?img=32" },
+        { name: "Sophia", age: 26, location: "Miami, USA", distance: "3.1 km away", desc: "Are you the one I've been looking for?", photo: "https://i.pravatar.cc/300?img=45" },
+        { name: "Emily", age: 23, location: "Chicago, USA", distance: "4.0 km away", desc: "Let's have some fun tonight...", photo: "https://i.pravatar.cc/300?img=12" },
+        { name: "Liyaa", age: 19, location: "Indonesia", distance: "4.0 km away", desc: "VC yuk sayang...", photo: "https://i.pinimg.com/736x/8c/d0/59/8cd05914de3fbccd55827f5a68babf21.jpg" },
+        { name: "Mia", age: 25, location: "Palembang, Indonesia", distance: "2.7 km away", desc: "GYM Bareng yuk beb...", photo: "https://i.pinimg.com/1200x/68/06/34/68063442c002760e321c58fb8e36c243.jpg" },
+        { name: "Olivia", age: 21, location: "Bogor, Indonesia", distance: "3.5 km away", desc: "Butuh Pelukan...", photo: "https://i.pinimg.com/736x/f6/07/0f/f6070fa8da345aa9194fba9e3348b4f8.jpg" },
+        { name: "Ava", age: 27, location: "Kucing, Malaysia", distance: "1.2 km away", desc: "Let's make tonight unforgettable...", photo: "https://i.pinimg.com/736x/21/a9/78/21a978a5b5870f0f89eec57d9547f2c9.jpg" },
+        { name: "Isabella", age: 20, location: "Kuala Lumpur, Malaysia", distance: "5.0 km away", desc: "I'm online and ready to chat...", photo: "https://i.pinimg.com/736x/38/1b/1c/381b1c9162bffbfd3e70573318a82315.jpg" },
+        { name: "Maria", age: 28, location: "Denver, USA", distance: "3.8 km away", desc: "Who wants to have some fun?", photo: "https://i.pinimg.com/736x/a6/bf/56/a6bf56d92a6204dc632bb83a9ff0ddc5.jpg" }
+
+    ];
+    
+    const ctaBtn = document.getElementById('ctaBtn');
+    const profilePhoto = document.getElementById('profilePhoto');
+    const profileName = document.getElementById('profileName');
+    const profileLocation = document.getElementById('profileLocation');
+    const profileDistance = document.getElementById('profileDistance');
+    const profileDesc = document.getElementById('profileDesc');
+    
+    function loadRandomProfile() {
+        const profile = PROFILES[Math.floor(Math.random() * PROFILES.length)];
+        profilePhoto.src = profile.photo;
+        profileName.innerHTML = `${profile.name}, <span>${profile.age}</span>`;
+        profileLocation.textContent = `📍 ${profile.location}`;
+        profileDistance.textContent = `● ${profile.distance} from you`;
+        profileDesc.innerHTML = `<strong>"${profile.desc}"</strong><br>I'm online now and I'd love to talk to you. Don't keep me waiting 😉`;
+    }
+    
+    ctaBtn.href = CPA_LINK;
+    loadRandomProfile();
+    setInterval(loadRandomProfile, 5000);
+    
+    ctaBtn.addEventListener('click', function() {
+        console.log('🎯 CPA Click → ' + CPA_LINK);
+    });
+    
+    console.log('🔥 Main Lander Active');
+</script>
+
+</body>
+</html>
